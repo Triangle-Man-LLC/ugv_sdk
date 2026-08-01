@@ -51,7 +51,11 @@ int main(int argc, char **argv) {
   }
 
   if (scout == nullptr)
+  {
     std::cout << "Failed to create robot object" << std::endl;
+    return -1;
+  }
+
 
   scout->Connect(device_name);
 

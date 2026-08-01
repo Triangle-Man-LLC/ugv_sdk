@@ -7,6 +7,7 @@
  * Copyright  : AgileX Robotics
  **/
 #include <string>
+#include <unistd.h>
 
 #include <iomanip>
 

@@ -32,7 +32,10 @@ int main(int argc, char **argv) {
 
   std::unique_ptr<TracerRobot> tracer;
   if (tracer == nullptr)
+  {
     std::cout << "Failed to create robot object" << std::endl;
+    return -1;
+  }
 
   tracer->Connect(device_name);
   tracer->EnableCommandedMode();

@@ -47,7 +47,10 @@ int main(int argc, char **argv) {
   }
 
   if (hunter == nullptr)
+  {
     std::cout << "Failed to create robot object" << std::endl;
+    return -1;
+  }
 
   hunter->Connect(device_name);
 

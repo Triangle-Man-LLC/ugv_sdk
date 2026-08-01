@@ -35,8 +35,11 @@ int main(int argc, char **argv) {
       new ScoutMiniOmniRobot(ProtocolVersion::AGX_V2));
 
   if (scout == nullptr)
+  {
     std::cout << "Failed to create robot object" << std::endl;
-
+    return -1;
+  }
+  
   scout->Connect(device_name);
   scout->SetMotionCommand(0.0, 0.0, 0.8);
 

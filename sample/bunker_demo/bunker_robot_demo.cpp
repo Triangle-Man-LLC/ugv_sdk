@@ -45,7 +45,10 @@ int main(int argc, char **argv) {
   }
 
   if (bunker == nullptr)
+  {
     std::cout << "Failed to create robot object" << std::endl;
+    return -1;
+  }
 
   bunker->Connect(device_name);
 

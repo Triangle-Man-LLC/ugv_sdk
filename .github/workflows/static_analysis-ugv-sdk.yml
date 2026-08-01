@@ -1,0 +1,23 @@
+name: CI Static Analyzer - UGV-SDK Driver Library
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  UGV-SDK-linux:
+    runs-on: [self-hosted, Linux]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        # with:
+        #   submodules: true
+
+      - name: Cppcheck static analyzer
+        run: |
+          cd $GITHUB_WORKSPACE
+          cppcheck --enable=warning,performance,portability --error-exitcode=1 include src sample --force
