@@ -1,0 +1,53 @@
+name: CI Build and Test (Linux) - UGV SDK Library
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: UGV-SDK-linux-ci-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  UGV-SDK-linux:
+    runs-on: [self-hosted, Linux, HP]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          submodules: true
+
+      # ---------------------------------------------------------
+      # Configure + build everything (library + tests)
+      # ---------------------------------------------------------
+      - name: Configure and build
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/build
+          cd $GITHUB_WORKSPACE/build
+          cmake ..
+          make -j$(nproc)
+
+      # ---------------------------------------------------------
+      # Run tests (CTest)
+      # ---------------------------------------------------------
+      - name: Run CTest
+        run: |
+          cd $GITHUB_WORKSPACE/build
+          ctest --output-on-failure
+
+      # # ---------------------------------------------------------
+      # # Upload build artifacts
+      # # ---------------------------------------------------------
+      # - name: Upload build artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: UGV-SDK
+      #     path: UGV-SDK/build/**
+
+      - name: Delete build folder
+        run: rm -rf $GITHUB_WORKSPACE/build
